@@ -3,6 +3,7 @@ package page;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
 import org.junit.jupiter.api.Assertions;
 
@@ -39,6 +40,7 @@ public class StartPage {
     private final SelenideElement wordsPerMinute = $x("//div[contains(text(),'Слов в минуту')]");
 
 
+    @Owner("Viktor Lukashev")
     @Step("Переходим на страницу теста")
     public void goTestPage() {
         btnKeyboardLayouts.click();
@@ -47,11 +49,13 @@ public class StartPage {
         kbTextContainer.should(Condition.appear, Duration.ofDays(5000));
     }
 
+    @Owner("Viktor Lukashev")
     @Step("Получаем текст который на экране для последующего ввода")
     public String getCurrentWord() {
         return kbTextContainer.getText();
     }
 
+    @Owner("Viktor Lukashev")
     @Step("Печатаем данные в поле ввода")
     public void printKeyboard() throws InterruptedException {
         String currentWord = getCurrentWord();
