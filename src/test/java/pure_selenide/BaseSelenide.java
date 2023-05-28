@@ -2,13 +2,14 @@ package pure_selenide;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
-import data_file.Data;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.Step;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
 public class BaseSelenide {
+    private static final String URL_GAME = "https://brainapps.ru/typing-test/start";
+
     @BeforeEach
     @Step("Инициализация selenide с настройками")
     public void init() {
@@ -16,12 +17,12 @@ public class BaseSelenide {
         Configuration.driverManagerEnabled = true;
         Configuration.browserSize = "1920x1080";
         Configuration.headless = false;
-        Selenide.open(Data.URL_GAME);
+        Selenide.open(URL_GAME);
     }
 
     @AfterEach
     @Step("Выполнение метода после каждого закрытия тестов")
-    public void tearDown(){
+    public void tearDown() {
         Selenide.closeWebDriver();
     }
 }
