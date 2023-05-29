@@ -23,7 +23,7 @@ public class StartPage {
     private final SelenideElement kbTextContainer = $x("//div[@class='kbTextContainer']");
 
 
-    // Пожалуйста, смените раскладку клавиатуры
+    // Пожалуйста, смените раскладку клавиатуры 'Oops'
     private final SelenideElement warningHolderOops = $x("//button[@class='swal2-confirm swal2-styled']");
 
     private final SelenideElement body = $x("//body");
