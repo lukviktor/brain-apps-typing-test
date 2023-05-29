@@ -3,10 +3,17 @@ package pure_selenide;
 import com.ibm.icu.text.Transliterator;
 import org.junit.jupiter.api.Test;
 
+import java.util.Random;
+
 public class ConvertText {
 
     private static final String CYRILLIC_TO_LATIN = "Russian-Latin/BGN";
 
+    public char randChar() {
+        Random r = new Random();
+        String xz = "абвгдежзиклмнопрстуфхцчюя".toUpperCase();
+        return xz.charAt(r.nextInt(xz.length()));
+    }
 
     @Test
     public void trTest() {
