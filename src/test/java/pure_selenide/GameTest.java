@@ -6,11 +6,13 @@ import page.StartPage;
 
 public class GameTest extends BaseSelenide {
     @Test
-    @DisplayName("Играем в набор текста")
+    @DisplayName(value = "Играем в набор текста")
     public void gameTest() throws InterruptedException {
         StartPage startPage = new StartPage();
         startPage.goTestPage();
-        startPage.printKeyboard();
+        startPage.printConvKeyboard();
     }
+
+
 }
 
