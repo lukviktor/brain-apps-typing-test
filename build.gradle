@@ -2,6 +2,12 @@ plugins {
     id 'java'
 }
 
+compileJava.options.encoding = 'UTF-8'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
 group = 'org.example'
 version = '1.0-SNAPSHOT'
 
@@ -10,10 +16,20 @@ repositories {
 }
 
 dependencies {
-    testImplementation platform('org.junit:junit-bom:5.9.1')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
+    implementation 'com.ibm.icu:icu4j:73.1'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+    testImplementation 'com.codeborne:selenide:6.13.0'
+    testImplementation 'io.cucumber:cucumber-java:7.1.0'
+    implementation 'io.qameta.allure:allure-selenide:2.21.0'
 }
 
 test {
     useJUnitPlatform()
+    testLogging {
+        showStandardStreams = true
+    }
+    scanForTestClasses = true
+    include '**/*Test.class'
 }
