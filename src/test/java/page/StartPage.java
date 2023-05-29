@@ -7,7 +7,6 @@ import io.qameta.allure.Step;
 import pure_selenide.ConvertText;
 
 import java.time.Duration;
-import java.util.Random;
 
 import static com.codeborne.selenide.Selenide.$x;
 import static java.lang.Thread.sleep;
@@ -45,6 +44,11 @@ public class StartPage {
         return kbTextContainer.getText();
     }
 
+    @Owner("Viktor Lukashev")
+    @Step("Закрываем окно предупреждения Oops")
+    public void warningHolderOops() {
+        warningHolderOops.click();
+    }
 
     @Owner("Viktor Lukashev")
     @Step("Получаем текст который на экране для последующего ввода")
@@ -65,21 +69,26 @@ public class StartPage {
             // Проверяем, что появилось окно "Смените раскладку клавиатуры"
             if (warningHolderOops.exists()) {
                 // Если окно есть, то кликаем на кнопку "ОК" для изменения раскладки
-                warningHolderOops.click();
-                body.sendKeys(ConvertText.convertToEnglish(currentWord));
+                warningHolderOops();
+                String newKeys = ConvertText.convertToEnglish(currentWord);
+                body.sendKeys(newKeys);
+                System.out.println(newKeys);
 
                 if (warningHolderOops.exists()) {
-                    warningHolderOops.click();
+                    warningHolderOops();
                     Character currentNewWord = getCurrentWordChar();
                     String current = ConvertText.convertChar(currentNewWord);
                     body.sendKeys(current);
+                    System.out.println(current);
 
                     if (warningHolderOops.exists()) {
-                        warningHolderOops.click();
+                        warningHolderOops();
                     }
                 }
             }
             currentWord = getCurrentWord(); // Обновляем значение currentWord
+            //Для остановки
+            System.out.println("Не удалось");
             break;
         }
     }

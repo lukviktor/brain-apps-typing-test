@@ -12,7 +12,5 @@ public class GameTest extends BaseSelenide {
         startPage.goTestPage();
         startPage.printConvKeyboard();
     }
-
-
 }
 
