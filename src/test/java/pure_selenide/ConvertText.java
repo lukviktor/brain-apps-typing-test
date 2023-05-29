@@ -3,6 +3,8 @@ package pure_selenide;
 import com.ibm.icu.text.Transliterator;
 
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicReferenceArray;
+import java.util.stream.IntStream;
 
 public class ConvertText {
 
@@ -27,28 +29,21 @@ public class ConvertText {
 
     public static String convertToEnglish(String str) {
         String english = "";
-        String[] russianLetters = {"й", "ц", "у", "к", "е", "н", "г", "ш", "щ", "з", "х", "ъ", "ф", "ы", "в", "а", "п",
+        AtomicReferenceArray<String> russianLetters = new AtomicReferenceArray<>(new String[]{"й", "ц", "у", "к", "е", "н", "г", "ш", "щ", "з", "х", "ъ", "ф", "ы", "в", "а", "п",
                 "р", "о", "л", "д", "ж", "э", "я", "ч", "с", "м", "и", "т", "ь", "б", "ю", "ё", "Й", "Ц", "У", "К", "Е",
                 "Н", "Г", "Ш", "Щ", "З", "Х", "Ъ", "Ф", "Ы", "В", "А", "П", "Р", "О", "Л", "Д", "Ж", "Э", "Я", "Ч", "С",
-                "М", "И", "Т", "Ь", "Б", "Ю", "Ё"};
-        String[] englishLetters = {"q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]", "a", "s", "d", "f",
+                "М", "И", "Т", "Ь", "Б", "Ю", "Ё"});
+        AtomicReferenceArray<String> englishLetters = new AtomicReferenceArray<>(new String[]{"q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]", "a", "s", "d", "f",
                 "g", "h", "j", "k", "l", ";", "'", "z", "x", "c", "v", "b", "n", "m", ",", ".", "`", "Q", "W", "E", "R",
                 "T", "Y", "U", "I", "O", "P", "{", "}", "A", "S", "D", "F", "G", "H", "J", "K", "L", ":", "\"", "Z",
-                "X", "C", "V", "B", "N", "M", "<", ">", "~"};
+                "X", "C", "V", "B", "N", "M", "<", ">", "~"});
         for (int i = 0; i < str.length(); i++) {
             char ch = str.charAt(i);
-            int index = -1;
-            for (int j = 0; j < russianLetters.length; j++) {
-                if (russianLetters[j].charAt(0) == ch) {
-                    index = j;
-                    break;
-                }
-            }
-            if (index >= 0) {
-                english += englishLetters[index];
-            } else {
-                english += ch;
-            }
+            int index = IntStream.range(0, russianLetters.length())
+                    .filter(j -> russianLetters.get(j)
+                            .charAt(0) == ch).findFirst()
+                    .orElse(-1);
+            english += index >= 0 ? englishLetters.get(index) : Character.valueOf(ch);
         }
         return english;
     }
